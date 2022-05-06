@@ -7,8 +7,8 @@ POST {{baseUrl}}/products/
 Content-Type: application/json
 
 {
-  "title": "Манго",
-  "description": "Лучшие манго на рынке"
+  "title": "Ананас",
+  "description": "Лучшие ананасы на рынке"
 }
 
 ###
@@ -20,23 +20,23 @@ Content-Type: application/json
 ###
 
 # обновление продукта
-PATCH {{baseUrl}}/products/2/
+PATCH {{baseUrl}}/products/7/
 Content-Type: application/json
 
 {
-  "description": "Самые сочные и ароматные помидорки"
+  "description": "Самые сочные и ароматные ананасы"
 }
 
 ###
 
 # удаление продукта
-DELETE {{baseUrl}}/products/1/
+DELETE {{baseUrl}}/products/6/
 Content-Type: application/json
 
 ###
 
 # поиск продуктов по названию и описанию
-GET {{baseUrl}}/products/?search=манго
+GET {{baseUrl}}/products/?search=ананас
 Content-Type: application/json
 
 ###
@@ -46,17 +46,17 @@ POST {{baseUrl}}/stocks/
 Content-Type: application/json
 
 {
-  "address": "address_1_check_this",
+  "address": "address_5_check_this",
   "positions": [
     {
-      "product": 2,
-      "quantity": 250,
-      "price": 120.50
+      "product": 3,
+      "quantity": 450,
+      "price": 100.50
     },
     {
-      "product": 3,
-      "quantity": 100,
-      "price": 180
+      "product": 7,
+      "quantity": 120,
+      "price": 250
     }
   ]
 }
@@ -64,7 +64,7 @@ Content-Type: application/json
 ###
 
 # обновляем записи на складе
-PATCH {{baseUrl}}/stocks/4/
+PATCH {{baseUrl}}/stocks/1/
 Content-Type: application/json
 
 {
@@ -85,5 +85,5 @@ Content-Type: application/json
 ###
 
 # поиск складов, где есть определенный продукт
-GET {{baseUrl}}/stocks/?products=3
+GET {{baseUrl}}/stocks/?products=2
 Content-Type: application/json

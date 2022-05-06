@@ -17,11 +17,10 @@ class ProductPositionSerializer(serializers.ModelSerializer):
 
 class StockSerializer(serializers.ModelSerializer):
     positions = ProductPositionSerializer(many=True)
-    product = ProductSerializer(many=True)
 
     class Meta:
         model = Stock
-        fields = ['id', 'address', 'product', 'positions']
+        fields = ['id', 'address', 'products', 'positions']
 
     def create(self, validated_data):
         # достаем связанные данные для других таблиц

@@ -1,4 +1,3 @@
-import requests
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -44,9 +43,8 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         """Метод для валидации. Вызывается при создании и обновлении."""
         user_advertisements = Advertisement.objects.filter(creator=self.context['request'].user, status='OPEN').count()
         add_method = self.context['request'].method
-        if add_method == 'POST' or add_method == 'PATCH' or data.get('status') == 'OPEN':
+        if add_method == 'POST' or add_method == 'PATCH' and data.get('status') == 'OPEN':
             if user_advertisements >= 20:
                 raise ValidationError('Лимит ваших открытых объявлений достиг максимума!')
         return data
-
 

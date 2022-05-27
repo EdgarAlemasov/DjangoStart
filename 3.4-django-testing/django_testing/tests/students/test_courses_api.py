@@ -38,6 +38,7 @@ def test_get_first_course(client, courses_factory):
     course = courses[index].id
     response = client.get(f'/courses/{course}/')
     data = response.json()
+    assert response.status_code == 200
     assert data['name'] == courses[index].name
 
 
@@ -47,6 +48,7 @@ def test_get_courses_list(client, courses_factory):
     courses = courses_factory(_quantity=20)
     response = client.get('/courses/')
     data = response.json()
+    assert response.status_code == 200
     assert len(data) == len(courses)
 
 
@@ -70,10 +72,14 @@ def test_filter_course_id(client, courses_factory):
 
 # проверка фильтрации списка курсов по name
 @pytest.mark.django_db
-def test_filter_course_name(client):
-    response = client.post('/courses/', data={'name': 'Python'})
-    data = response.json()
-    assert data['name'] == 'Python'
+def test_filter_course_name(client, courses_factory):
+    courses = courses_factory(_quantity=5)
+    index = 2
+    course = courses[index].name
+    base_url = f'http://localhost:8000/courses/?name={course}/'
+    response = client.get(base_url)
+    assert response.status_code == 200
+    assert response is not []
 
 
 # тест успешного обновления курса
@@ -85,7 +91,6 @@ def test_update_course(client, courses_factory):
     base_url = f'http://localhost:8000/courses/{course}/'
     response = client.patch(base_url, data={'name': 'Hello'})
     assert response.status_code == 200
-    response = client.get(base_url)
     data = response.json()
     assert data['name'] == 'Hello'
 

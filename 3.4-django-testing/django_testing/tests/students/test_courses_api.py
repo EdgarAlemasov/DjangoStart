@@ -65,8 +65,8 @@ def test_filter_course_id(client, courses_factory):
     courses = courses_factory(_quantity=20)
     index = 17
     course = courses[index].id
-    base_url = f'http://localhost:8000/courses/{course}/'
-    response = client.get(base_url)
+    base_url = '/courses/'
+    response = client.get(base_url, data={'id': course})
     assert response.status_code == 200
 
 
@@ -76,8 +76,8 @@ def test_filter_course_name(client, courses_factory):
     courses = courses_factory(_quantity=5)
     index = 2
     course = courses[index].name
-    base_url = f'http://localhost:8000/courses/?name={course}/'
-    response = client.get(base_url)
+    base_url = '/courses/'
+    response = client.get(base_url, data={'name': course})
     assert response.status_code == 200
     assert response is not []
 
@@ -88,7 +88,7 @@ def test_update_course(client, courses_factory):
     courses = courses_factory(_quantity=20)
     index = 6
     course = courses[index].id
-    base_url = f'http://localhost:8000/courses/{course}/'
+    base_url = f'/courses/{course}/'
     response = client.patch(base_url, data={'name': 'Hello'})
     assert response.status_code == 200
     data = response.json()
